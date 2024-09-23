@@ -3,25 +3,37 @@ import numpy as np
 import random
 import json
 import re
+import os
 
 import utils as ut
 
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
-client = MongoClient('mongodb+srv://ganlu:Gl;1995102@cluster0.k4x3b.mongodb.net/')
-db = client['JobMatch']
-
-emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-
-# 工具函数
-
 # 连接到 MongoDB 数据库
+
+# client = MongoClient('mongodb+srv://ganlu:Gl;1995102@cluster0.k4x3b.mongodb.net/')
+# def connect_mongodb():
+#     client = MongoClient('mongodb+srv://ganlu:Gl;1995102@cluster0.k4x3b.mongodb.net/')
+#     db = client['JobMatch']
+#     return db
+
 def connect_mongodb():
-    client = MongoClient('mongodb+srv://ganlu:Gl;1995102@cluster0.k4x3b.mongodb.net/')
+    # 从环境变量中获取 MongoDB 连接字符串
+    mongodb_uri = os.getenv('MONGODB_URI')
+    if not mongodb_uri:
+        raise ValueError("MongoDB URI is not set in environment variables.")
+    
+    # 连接到 MongoDB 数据库
+    client = MongoClient(mongodb_uri)
     db = client['JobMatch']
     return db
 
+
+emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+
+
+# 工具函数
 
 # Set up embedding model
 def set_emb_model():
