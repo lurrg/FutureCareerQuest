@@ -10,6 +10,8 @@ import utils as ut
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
+
+
 # 连接到 MongoDB 数据库
 
 # client = MongoClient('mongodb+srv://ganlu:Gl;1995102@cluster0.k4x3b.mongodb.net/')
@@ -29,8 +31,11 @@ def connect_mongodb():
     db = client['JobMatch']
     return db
 
+db = connect_mongodb()
 
+# Set embedding model
 emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+
 
 
 # 工具函数
