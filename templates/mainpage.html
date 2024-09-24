@@ -7,7 +7,7 @@
     <title>Styled Page Structure</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <!-- 顶部固定的标题 -->
@@ -369,22 +369,63 @@
                         var table_data = {{ table_data | default('{}') | tojson | safe }};
                     
                         // Function to populate the table with data
+                        // function populateTable(data) {
+                        //     const tableBody = document.querySelector("#data-table tbody");
+                            
+                        //     // Get the number of rows
+                        //     const numRows = data['Rank'].length;
+                    
+                        //     for (let i = 0; i < numRows; i++) {
+                        //         const row = document.createElement("tr");
+                                
+                        //         // Append cells for each column
+                        //         for (const key of ['Rank', 'Similar Roles', 'Potential Career Path', 'Skills']) {
+                        //             const cell = document.createElement("td");
+                        //             cell.textContent = data[key][i];  // Get the data for the current row and column
+                        //             row.appendChild(cell);
+                        //         }
+                                
+                        //         tableBody.appendChild(row);
+                        //     }
+                        // }
+
+                        // Function to populate the table with data
                         function populateTable(data) {
                             const tableBody = document.querySelector("#data-table tbody");
-                            
-                            // Get the number of rows
+
+                            // Debugging: Log the data to inspect its structure
+                            console.log('Data received:', data);
+
+                            // Check if data is defined and contains the necessary keys
+                            if (!data || !data['Rank'] || !Array.isArray(data['Rank'])) {
+                                console.error('Invalid data format:', data);
+                                return; // Exit the function if data format is incorrect
+                            }
+
                             const numRows = data['Rank'].length;
-                    
+
+                            // Check if all necessary columns are present and have the same length
+                            const requiredKeys = ['Rank', 'Similar Roles', 'Potential Career Path', 'Skills'];
+                            for (const key of requiredKeys) {
+                                if (!data[key] || !Array.isArray(data[key]) || data[key].length !== numRows) {
+                                    console.error(`Data for ${key} is missing or has an incorrect format.`);
+                                    return; // Exit the function if any column is invalid
+                                }
+                            }
+
+                            // Clear existing rows if any
+                            tableBody.innerHTML = '';
+
                             for (let i = 0; i < numRows; i++) {
                                 const row = document.createElement("tr");
-                                
+
                                 // Append cells for each column
-                                for (const key of ['Rank', 'Similar Roles', 'Potential Career Path', 'Skills']) {
+                                for (const key of requiredKeys) {
                                     const cell = document.createElement("td");
                                     cell.textContent = data[key][i];  // Get the data for the current row and column
                                     row.appendChild(cell);
                                 }
-                                
+
                                 tableBody.appendChild(row);
                             }
                         }
