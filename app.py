@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import utils as ut
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # 连接到 MongoDB 数据库
 db = ut.connect_mongodb()
