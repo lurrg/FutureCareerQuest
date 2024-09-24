@@ -12,12 +12,6 @@ from scipy.spatial.distance import cosine
 
 # 连接到 MongoDB 数据库
 
-# client = MongoClient('mongodb+srv://ganlu:Gl;1995102@cluster0.k4x3b.mongodb.net/')
-# def connect_mongodb():
-#     client = MongoClient('mongodb+srv://ganlu:Gl;1995102@cluster0.k4x3b.mongodb.net/')
-#     db = client['JobMatch']
-#     return db
-
 def connect_mongodb():
     # 从环境变量中获取 MongoDB 连接字符串
     mongodb_uri = os.getenv('MONGODB_URI')
@@ -34,6 +28,10 @@ db = connect_mongodb()
 
 # Set embedding model
 # emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+# def set_emb_model():
+#     emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+#     return emb_model
+
 # Set embedding API
 api_key = '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'
 headers = {'Authorization': f'Bearer {api_key}'}
@@ -43,12 +41,6 @@ url = 'https://api-inference.huggingface.co/pipeline/feature-extraction/sentence
 
 
 # 工具函数
-
-# Set up embedding model
-# def set_emb_model():
-#     emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-#     return emb_model
-
 
 def get_emb(text):
     """ Clean and get embeddiing of given string """

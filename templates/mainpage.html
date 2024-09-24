@@ -7,7 +7,6 @@
     <title>Styled Page Structure</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link rel="stylesheet" href="/styles/styles.css">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
 </head>
 <body>
     <!-- 顶部固定的标题 -->
@@ -72,11 +71,6 @@
                 </div>
             </div>
 
-            <!-- <div id="controls">
-                <label for="coreSlider">Number of Core Nodes: </label>
-                <input type="range" id="coreSlider" min="1" max="10" value="2" />
-            </div> -->
-
             <div class="graph-container">
                 <div id="graph-section">
                     <!-- 如果有 error_message 则显示错误信息，否则显示图表 -->
@@ -97,16 +91,10 @@
                                 .attr("height", "100%")
                                 .attr("viewBox", `0 0 ${width} ${height}`)  // 设置 viewBox，svg 将自适应缩放
                                 .attr("preserveAspectRatio", "xMidYMid meet");  // 保持纵横比居中显示
-                                // .attr("width", width)
-                                // .attr("height", height);
 
                             var skillsData = {{ skillsData | tojson | safe }};
                             var nodes = {{ nodes | tojson | safe }};
                             var links = {{ links | tojson | safe }};
-                            
-                            // console.log(skillsData);
-                            // console.log(nodes);
-                            // console.log(links);
 
                             // 添加箭头标记
                             svg.append("defs").append("marker")
@@ -298,13 +286,6 @@
                                     .text(d => d.skill);
                             }
 
-                            // Slider for core node count
-                            // d3.select("#coreSlider").on("input", function() {
-                            //     const coreCount = +this.value;
-                            //     console.log("Core nodes to display:", coreCount);
-                            //     // Logic to adjust displayed core nodes will go here.
-                            // });
-
                             function drag(simulation) {
                                 function dragstarted(event) {
                                     if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -367,27 +348,6 @@
                     <script>
                         // Sample table_data object (this should come from your server-side code or API)
                         var table_data = {{ table_data | default('{}') | tojson | safe }};
-                    
-                        // Function to populate the table with data
-                        // function populateTable(data) {
-                        //     const tableBody = document.querySelector("#data-table tbody");
-                            
-                        //     // Get the number of rows
-                        //     const numRows = data['Rank'].length;
-                    
-                        //     for (let i = 0; i < numRows; i++) {
-                        //         const row = document.createElement("tr");
-                                
-                        //         // Append cells for each column
-                        //         for (const key of ['Rank', 'Similar Roles', 'Potential Career Path', 'Skills']) {
-                        //             const cell = document.createElement("td");
-                        //             cell.textContent = data[key][i];  // Get the data for the current row and column
-                        //             row.appendChild(cell);
-                        //         }
-                                
-                        //         tableBody.appendChild(row);
-                        //     }
-                        // }
 
                         // Function to populate the table with data
                         function populateTable(data) {
