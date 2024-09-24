@@ -1,14 +1,11 @@
 from pymongo import MongoClient
 import numpy as np
 import random
-import json
 import re
 import os
 
-import utils as ut
-
 from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
+from scipy.spatial.distance import cosine
 
 
 
@@ -62,7 +59,7 @@ def get_emb(text):
 
 def get_similar_roles(user_role, user_skills, similarity_bar=0.3):
     """ Return most similar role and skills based on user entry """
-
+    
     # Get role_skills collection
     role_skill_docs = db['role_skills'].find({})
 
@@ -72,7 +69,7 @@ def get_similar_roles(user_role, user_skills, similarity_bar=0.3):
         role_similarity_list = []
         for doc in role_skill_docs:
             role_emd = np.array(doc['role_emb'])
-            role_similarity = cosine_similarity([user_role_emb], [role_emd])[0][0]
+            role_similarity = 1 - cosine(user_role_emb, role_emd)
             role_similarity_list.append({'role':doc['role1'], 'skills':doc['skills'], 'similarity':role_similarity})
         # Order by role similarity
         role_similarity_list.sort(key=lambda x: x['similarity'], reverse=True)
@@ -87,7 +84,7 @@ def get_similar_roles(user_role, user_skills, similarity_bar=0.3):
         skills_similarity_list = []
         for doc in role_skill_docs:
             skills_emd = np.array(doc['skills_emb'])
-            skills_similarity = cosine_similarity([user_skills_emb], [skills_emd])[0][0]
+            skills_similarity = 1 - cosine(user_skills_emb, skills_emd)
             skills_similarity_list.append({'role':doc['role1'], 'skills':doc['skills'], 'similarity':skills_similarity})
         # Order by skills similarity
         skills_similarity_list.sort(key=lambda x: x['similarity'], reverse=True)
@@ -103,9 +100,9 @@ def get_similar_roles(user_role, user_skills, similarity_bar=0.3):
         similarity_list = []
         for doc in role_skill_docs:
             role_emd = np.array(doc['role_emb'])
-            role_similarity = cosine_similarity([user_role_emb], [role_emd])[0][0]
+            role_similarity = 1 - cosine(user_role_emb, role_emd)
             skills_emd = np.array(doc['skills_emb'])
-            skills_similarity = cosine_similarity([user_skills_emb], [skills_emd])[0][0]
+            skills_similarity = 1 - cosine(user_skills_emb, skills_emd)
             role_skills_similarity = role_similarity + skills_similarity
             similarity_list.append({'role':doc['role1'], 'skills':doc['skills'], 'similarity':role_skills_similarity})
         # Order by skills similarity
@@ -160,7 +157,6 @@ def get_table_data(top_similar_roles, top_N=50):
                 skills.append(', '.join(one_role_skills))
 
     table_data = {"Rank":ranks, "Similar Roles":other_similar_roles, "Potential Career Path":potential_career_path, "Skills":skills}
-    # json_table_data = json.dumps(table_data)
     
     return table_data
 

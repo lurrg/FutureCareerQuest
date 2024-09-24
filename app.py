@@ -1,13 +1,5 @@
 from flask import Flask, render_template, request
-from pymongo import MongoClient
-import numpy as np
-import json
-import re
-
 import utils as ut
-
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
 
 
 app = Flask(__name__)
