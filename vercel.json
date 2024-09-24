@@ -4,8 +4,7 @@
     { "src": "app.py", "use": "@vercel/python" }
   ],
   "routes": [
-    { "src": "/styles/(.*)", "dest": "/public/styles/$1" },
-    { "src": "/static/(.*)", "dest": "/public/$1" },
-    { "src": "/(.*)", "dest": "/app.py" }
+    { "src": "styles/(.*)", "dest": "public/styles/$1" },
+    { "src": "(.*)", "dest": "app.py" }
   ]
 }
