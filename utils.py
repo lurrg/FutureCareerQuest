@@ -1,10 +1,11 @@
 from pymongo import MongoClient
 import numpy as np
 import random
+import requests
 import re
 import os
 
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from scipy.spatial.distance import cosine
 
 
@@ -23,24 +24,30 @@ def connect_mongodb():
     if not mongodb_uri:
         raise ValueError("MongoDB URI is not set in environment variables.")
     
-    # 连接到 MongoDB 数据库
     client = MongoClient(mongodb_uri)
     db = client['JobMatch']
     return db
 
 db = connect_mongodb()
 
+
+
 # Set embedding model
-emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+# emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+# Set embedding API
+api_key = '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'
+headers = {'Authorization': f'Bearer {api_key}'}
+url = 'https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2'
+
 
 
 
 # 工具函数
 
 # Set up embedding model
-def set_emb_model():
-    emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-    return emb_model
+# def set_emb_model():
+#     emb_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+#     return emb_model
 
 
 def get_emb(text):
@@ -50,10 +57,11 @@ def get_emb(text):
     text = text.lower()
     text = re.sub(r'[^a-z\s]', '', text)
     text = re.sub(r'\s+', ' ', text).strip()
+
+    data = {"inputs":text}
     
     # Get embedding
-    text_emb = emb_model.encode(text)
-
+    text_emb = np.array(requests.post(url, headers=headers, json=data).json())
     return text_emb
 
 
