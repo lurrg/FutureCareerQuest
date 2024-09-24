@@ -1,0 +1,296 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;  /* 禁止滚动条 */
+    overflow-y: auto;
+}
+
+.fixed-header {
+    background-color: #20b8b8dd;  /*20b8b8dd   22aa90  20b8b8ee   13b295dd  00bc9add*/
+    color: white;
+    padding: 15px 20px;
+    text-align: left;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #20b8b8dd;
+    color: white;
+    margin-top: 40px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.custom-paragraph {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-top: 80px; /* 给主内容区预留顶部空间 */
+    gap: 30px; /* 模块之间的间距 */
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    flex: 1;
+}
+
+.content-with-ad {
+    display: flex;
+    gap: 20px; /* 控制内容与广告之间的间距 */
+}
+
+.large-module {
+    position: relative;
+    background-color: white;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    flex: 1; /* 使大模块占据容器的剩余空间 */
+}
+
+.side-ad {
+    width: 350px; /* 设置广告区域的宽度 */
+    background-color: #f0f0f0; /* 广告区域背景颜色（可选） */
+    padding: 10px; /* 广告区域内边距 */
+    border: 1px solid #ccc; /* 广告区域边框（可选） */
+}
+
+.bar-ad {
+    /*width: 350px; /* 设置广告区域的宽度 */
+    background-color: #f0f0f0; /* 广告区域背景颜色（可选） */
+    padding: 40px; /* 广告区域内边距 */
+    border: 1px solid #ccc; /* 广告区域边框（可选） */
+}
+
+.large-module h2 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.large-module p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+}
+
+.large-module .small-module {
+    background-color: #f0f0f0;
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #ddd; 
+}
+
+
+/* Graph部分 */
+.graph-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex: 1;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    width: 100%;       /* Take full width of the parent container */
+    height: 100vh;     /* Take full height of the viewport */
+    max-height: 100vh; /* Prevent exceeding the viewport height */
+    padding-top: 5px;      /* 设置顶部内边距 */
+    padding-bottom: 5px;   /* 设置底部内边距 */
+}
+
+#graph-section {
+    flex: 8;                     /* 占据宽度 */
+    overflow: hidden;            /* 隐藏溢出的内容 */
+    display: flex;
+    /* align-items: center;         垂直居中内容 */
+    justify-content: center;     /* 水平居中内容 */
+    background-color: #ececec;   /* 可选：图表区域背景颜色 */
+    border: 1px solid #ccc;      /* 可选：边框 */
+    padding: 0; /* 移除上下内边距 */
+    margin: 0; /* 移除外边距 */
+    height: 100%; /* 确保图表占满整个高度 */
+}
+
+#skills-section {
+    flex: 2.5;                     /* 占据宽度 */
+    overflow: hidden;            /* 隐藏溢出的内容 */
+    display: flex;
+    justify-content: center;     /* 水平居中内容 */
+    background-color: #ececec;   /* 可选：技能区域背景颜色 */
+    border: 1px solid #ccc;      /* 可选：边框 */
+    padding: 5px;
+}
+
+/* 控制里面内容自适应缩放 */
+.error, canvas, svg, img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;         /* 保持内容比例缩放 */
+}
+
+.node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+}
+.link {
+    fill: none;
+    stroke: #aaa;
+    stroke-width: 1.25px;
+}
+text {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    /* fill: black; */
+    pointer-events: none;
+}
+.core-text {
+    font-size: 16px;
+    font-weight: bold;
+    /* fill: rgb(55, 54, 54); */
+    pointer-events: none;
+}
+.outer-text {
+    font-size: 14px;
+    font-weight: bold;
+    /* fill: rgb(55, 54, 54); */
+    pointer-events: none;
+}
+
+
+/* Graph注释 */
+.color-info {
+    display: flex;
+    align-items: center;  /* 垂直居中对齐 */
+    margin-bottom: 10px;  /* 圆圈和文字之间的间距 */
+}
+
+.color-circle {
+    display: inline-block;
+    width: 15px;  /* 圆圈的宽度 */
+    height: 15px;  /* 圆圈的高度 */
+    border-radius: 50%;  /* 圆角，形成圆圈 */
+    margin-right: 8px;  /* 圆圈和解释文字之间的间距 */
+}
+
+.color-description {
+    font-size: 14px;  /* 文字大小 */
+    color: #333;  /* 文字颜色 */
+}
+
+.notation-block {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex: 1;
+}
+
+
+/* Table部分 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+
+/* 用户输入部分 */
+/* 设置表单的整体样式 */
+form {
+    padding: 20px;
+    padding-bottom: 50px; /* 给底部留出足够空间 */
+    position: relative;
+    border: 1px solid #ffffff;
+    max-width: 100%;  /* 控制表单的宽度 */
+    margin: 0 auto;    /* 让表单居中 */
+}
+
+.form-group {
+    margin-bottom: 5px; /* Space between each form group */
+    position: relative;
+}
+
+label {
+    margin-bottom: 5px; /* Space between label and input */
+    font-size: 14px; /* Font size */
+    /* font-weight: bold; */
+}
+
+textarea {
+    width: 100%; /* Adjust width to fit the container */
+    padding: 10px; /* Add padding inside the textarea */
+    border: 1px solid #ccc; /* Border color and style */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    font-size: 12px; /* Font size */
+    font-family: Arial, sans-serif; /* Font family */
+    resize: vertical; /* Allow resizing only vertically */
+    min-height: 30px; /* Minimum height to start with */
+}
+
+/* 设置 submit 按钮的位置 */
+#submitBtn {
+    position: absolute;
+    right: 3%;  /* 距离右边框 20px */
+    bottom: 2%; /* 距离下边框 20px */
+    padding: 10px 20px;
+    background-color: #20b8b8dd;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+#submitBtn:hover {
+    background-color: #1a8c8cdd;
+}
+
+
+
+
+
+
