@@ -8,7 +8,7 @@ app = Flask(__name__)
 db = ut.connect_mongodb()
 
 # Set up embedding model
-emb_model = ut.set_emb_model()
+# emb_model = ut.set_emb_model()
 
 # 根路由，渲染主页
 @app.route('/')
