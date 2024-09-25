@@ -79,7 +79,7 @@ def get_similar_roles(user_role, user_skills, similarity_bar=0.3):
         return top_similar_roles
 
     # If only match by skills
-    if not user_role.strip() and user_skills.strip():
+    if user_skills.strip() and not user_role.strip():
         user_skills_emb = get_emb(user_skills)
         skills_similarity_list = []
         for doc in role_skill_docs:
