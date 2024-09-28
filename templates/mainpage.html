@@ -180,7 +180,7 @@
                                 .enter().append("circle")
                                 .attr("class", "node")
                                 .attr("r", d => d.similarity * 40)
-                                .attr("fill", d => d.group === 'core' ? "#9ddddd" : "#ceeeee")
+                                .attr("fill", d => d.group === 'core' ? "#55acac" : "#ceeeee")
                                 .attr("opacity", 0.3)  // 初始状态为半透明
                                 .call(drag(simulation));
 
